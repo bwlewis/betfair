@@ -50,6 +50,37 @@ ExchangeAU <- "https://api-au.betfair.com/exchange/v5/BFExchangeService"
   a
 }
 
+# Reasonably generic conversion of XML to a list. Anything
+# more serious than this should use the XML package, as this
+# function is already quite slow and not as good as a real
+# XML parser.
+.xml2list <- function(x)
+{
+  p <- gregexpr("<[A-Z,a-z]",x)[[1]]
+  if(length(p)<1) return(NULL)
+  ret <- c()
+  j <- 1
+  while(j<=length(p)) {
+    q <- gregexpr(">",substring(x,p[j]))[[1]]
+    if(length(q)<1) break
+    tag <- gsub("<(.*)>.*","\\1",substr(x,p[j],p[j]+q[1]-1))
+    tag <- gsub(" xsi.*","",tag)
+    term <- paste("</",tag,">",sep="")
+    q <- gregexpr(term,substring(x,p[j]))[[1]]
+    r <- gregexpr(">",substring(x,p[j]))[[1]]
+    if(length(q)<0) break
+    val <- substr(x,p[j]+r[1],p[j]+q[1]-2)
+#    cat(j,p[j],q[1], tag, " ",val, "\n")
+    k <- p[j] + q[1]
+    j <- head(which(p>k),n=1)
+    if(length(j)<1) break
+    v <- list(val)
+    names(v) <- tag
+    ret <- c(ret, v)
+  }
+  ret
+}
+
 # Greedily extract one element from a body, returning the extracted
 # element and the body less the extraction.
 `.xmlx` <- function(tag, body)
