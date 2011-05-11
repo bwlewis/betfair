@@ -1,14 +1,13 @@
 # Constants and an environment to store package global state data:
 .bfenv <- new.env(parent=emptyenv())
-Global   <- "Global"
-Exchange <- "Exchange"
 .bfenv$GlobalHeader <- 
 '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"> <soap:Body> <###REQUEST### xmlns="http://www.betfair.com/publicapi/v3/BFGlobalService/"><request><header><clientStamp>0</clientStamp><sessionToken>###SESSIONTOKEN###</sessionToken>'
 .bfenv$ExchangeHeader <- 
 '<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"> <soap:Body> <###REQUEST### xmlns="http://www.betfair.com/publicapi/v5/BFExchangeService/"><request><header><clientStamp>0</clientStamp><sessionToken>###SESSIONTOKEN###</sessionToken>'
 .bfenv$GlobalURL   <- "https://api.betfair.com/global/v3/BFGlobalService"
-.bfenv$ExchangeURL <- "https://api.betfair.com/exchange/v5/BFExchangeService"
-.bfenv$AUExchangeURL <- "https://api-au.betfair.com/exchange/v5/BFExchangeService"
+Global   <- "Global"
+Exchange   <- "https://api.betfair.com/exchange/v5/BFExchangeService"
+ExchangeAU <- "https://api-au.betfair.com/exchange/v5/BFExchangeService"
 
 # Get a list of unique tags in the body, exluding patterns from the list:
 .xmltags <- function(body, exclude=c())
@@ -109,6 +108,8 @@ Exchange <- "Exchange"
   fmls <- formals(match.fun(req))
   if(length(parameters)>0) fmls[names(parameters)] <- parameters
   if(length(fmls)>0) parameters <- fmls[which(!unlist(lapply(fmls,is.null)))]
+  j <- which(names(parameters)=='service')
+  if(length(j)>0) parameters <- parameters[-j]
   if(!exists("sessionToken", envir=.bfenv))
     if(!debug) stop("Not logged in")
     else assign("sessionToken", "DEBUG", envir=.bfenv)
@@ -119,9 +120,9 @@ Exchange <- "Exchange"
     body <- .bfenv$GlobalHeader
     burl <- .bfenv$GlobalURL
   }
-  else if(service == Exchange) {
+  else if(service == Exchange || service == ExchangeAU) {
     body <- .bfenv$ExchangeHeader
-    burl <- .bfenv$ExchangeURL
+    burl <- service
   }
   else stop("Unknown service")
   body <- sub("###REQUEST###", req, body)

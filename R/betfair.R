@@ -19,9 +19,9 @@
   x
 }
 
-`getAccountFunds` <- function()
+`getAccountFunds` <- function(service=Exchange)
 {
-  x <- .bfapi(match.call(), service=Exchange)
+  x <- .bfapi(match.call(), service=service)
   list(
     timestamp=.xmlp("timestamp", x),
     availBalance=as.numeric(.xmlp("availBalance", x)),
@@ -66,7 +66,7 @@
 # Example
 # getAllMarkets(eventTypeIds=list(int=7))
 # XXX countries, from/to filtering not working yet... ???
-`getAllMarkets` <- function(eventTypeIds=list(), countries=list(),fromDate=list(),toDate=list())
+`getAllMarkets` <- function(eventTypeIds=list(), countries=list(),fromDate=list(),toDate=list(), service=Exchange)
 {
   if(length(fromDate)>0) 
     fromDate <- format(as.Date(fromDate),"%Y-%m-%dT%H:%M:%SZ")
@@ -75,7 +75,7 @@
   v <- .bfapi(call('getAllMarkets', 
                     eventTypeIds=eventTypeIds,
                     countries=countries,
-                    fromDate=fromDate, toDate=toDate), service=Exchange)
+                    fromDate=fromDate, toDate=toDate), service=service)
   if(z <- .xmlp("errorCode", v) != "OK") return(z)
   x <- .xmlp('marketData', v)
   x <- .compressed2dataframe(x, col.names=c("Market ID", "Market Name", "Market Type", "Market Status", "Event Date", "Menu Path", "Event Hierachy", "Bet Delay", "Exchange Id", "ISO3 Country Code", "Last Refresh", "Number of Runners", "Number of Winners", "Total Amount Matched", "BSP Market", "Turning In Play"), colClasses=c("integer", rep("character",3), "numeric", rep("character",3), "integer", "character", "numeric", "integer", "integer", "numeric", "character", "character"))
@@ -132,9 +132,9 @@ print(course)
   x
 }
 
-`getInPlayMarkets` <- function()
+`getInPlayMarkets` <- function(service=Exchange)
 {
-  v <- .bfapi(match.call(), service=Exchange)
+  v <- .bfapi(match.call(), service=service)
   if(z <- .xmlp("errorCode", v) != "OK") return(z)
   x <- .xmlp("marketData",v)
   x <- .compressed2dataframe(x, col.names=c("Market ID", "Market Name", "Market Type", "Market Status", "Event Date", "Menu Path", "Event Hierachy", "Bet Delay", "Exchange Id", "ISO3 Country Code", "Last Refresh", "Number of Runners", "Number of Winners", "Total Amount Matched", "BSP Market", "Turning In Play"), colClasses=c("integer", rep("character",3), "numeric", rep("character",3), "integer", "character", "numeric", "integer", "integer", "numeric", "character", "character"))
@@ -144,9 +144,9 @@ print(course)
   x
 }
 
-`getCompleteMarketPricesCompressed` <- function(marketId)
+`getCompleteMarketPricesCompressed` <- function(marketId, service=Exchange)
 {
-  v <- .bfapi(match.call(), service=Exchange)
+  v <- .bfapi(match.call(), service=service)
   z <- .xmlp("errorCode", v)
   if(z != "OK") return(z)
   x <- .xmlp("completeMarketPrices", v)
@@ -206,9 +206,9 @@ print(course)
   l
 }
 
-`getMarketInfo` <- function(marketId)
+`getMarketInfo` <- function(marketId, service=Exchange)
 {
-  v <- .bfapi(match.call(), service=Exchange)
+  v <- .bfapi(match.call(), service=service)
   z <- .xmlp("errorCode", v)
   if(z != "OK") return(z)
   x <- .xmlp("marketLite", v)
@@ -222,9 +222,9 @@ print(course)
 # example:
 # x = getAllMarkets(eventTypeIds=list(int=7))
 # v = getMarketTradedVolumeCompressed(x[1,1])
-`getMarketTradedVolumeCompressed` <- function(marketId)
+`getMarketTradedVolumeCompressed` <- function(marketId, service=Exchange)
 {
-  v <- .bfapi(match.call(), service=Exchange)
+  v <- .bfapi(match.call(), service=service)
   z <- .xmlp("errorCode", v)
   if(z != "OK") return(z)
   x <- .xmlp("tradedVolume", v)
@@ -287,7 +287,7 @@ print(course)
 # But, we added an easy way to place a single bet too:
 # placeBets(bet)
 #
-`placeBets` <- function(bets=list())
+`placeBets` <- function(bets=list(), service=Exchange)
 {
 # Single bet convenience call:
   if(!is.list(bets[[1]])) {
@@ -297,7 +297,7 @@ print(course)
   if(length(names(bets)) < length(bets)) {
     names(bets) <- rep("PlaceBets",length(bets))
   }
-  v <- .bfapi(call("placeBets", bets=bets), service=Exchange)
+  v <- .bfapi(call("placeBets", bets=bets), service=service)
   z <- .xmlp("errorCode", v)
   if(z != "OK") return(z)
   x <- .xmlp("betResults", v)
@@ -313,9 +313,9 @@ print(course)
   x
 }
 
-`getBetLite` <- function(betId)
+`getBetLite` <- function(betId, service=Exchange)
 {
-  v <- .bfapi(match.call(), service=Exchange)
+  v <- .bfapi(match.call(), service=service)
   z <- .xmlp("errorCode", v)
   if(z != "OK") return(z)
   x <- .xmlp("betLite", v)
@@ -330,7 +330,7 @@ print(course)
 # example:
 # cancelBets(bets=list(CancelBets=list(betId=5)))
 # Pretty ugly! So, if bets is not a list, we coerce into the above form.
-`cancelBets` <- function(bets=list())
+`cancelBets` <- function(bets=list(), service=Exchange)
 {
   if(!is.list(bets)) {
     l <- list()
@@ -340,7 +340,7 @@ print(course)
     names(l) <-rep( "CancelBets",length(l))
     bets <- l
   }
-  v <- .bfapi(call("cancelBets", bets=bets), service=Exchange)
+  v <- .bfapi(call("cancelBets", bets=bets), service=service)
   z <- .xmlp("errorCode", v)
   if(z != "OK") return(z)
   x <- .xmlp("betResults", v)
@@ -356,9 +356,9 @@ print(course)
   x
 }
 
-`getMarket` <- function(marketId, includeCouponLinks=FALSE)
+`getMarket` <- function(marketId, includeCouponLinks=FALSE, service=Exchange)
 {
-  v <- .bfapi(match.call(), service=Exchange)
+  v <- .bfapi(match.call(), service=service)
   z <- .xmlp("errorCode", v)
   if(z != "OK") return(z)
   x <- .xmlp("market",v)
@@ -389,9 +389,9 @@ print(course)
   return(as.numeric(z))
 }
 
-`getMarketPrices` <- function(marketId, currencyCode=list())
+`getMarketPrices` <- function(marketId, currencyCode=list(), service=Exchange)
 {
-  v <- .bfapi(match.call(), service=Exchange)
+  v <- .bfapi(match.call(), service=service)
   z <- .xmlp("errorCode", v)
   if(z != "OK") return(z)
   x <- .xmlp("marketPrices",v)
@@ -402,9 +402,9 @@ print(course)
   market
 }
 
-`getSilks` <- function(markets)
+`getSilks` <- function(markets, service=Exchange)
 {
-  v <- .bfapi(match.call(), service=Exchange)
+  v <- .bfapi(match.call(), service=service)
   z <- .xmlp("errorCode", v)
   if(z != "OK") return(z)
   x <- .xmlp("marketDisplayDetails",v)
@@ -419,9 +419,9 @@ print(course)
                         orderBy="BET_ID",
                         recordCount=200,
                         sortOrder="ASC",
-                        startRecord=0)
+                        startRecord=0, service=Exchange)
 {
-  v <- .bfapi(match.call(), service=Exchange)
+  v <- .bfapi(match.call(), service=service)
   z <- .xmlp("errorCode", v)
   if(z != "OK") return(z)
   x <- .xmlp("bets",v)
@@ -435,9 +435,9 @@ print(course)
   x
 }
 
-`getBet` <- function(betId)
+`getBet` <- function(betId, service=Exchange)
 {
-  v <- .bfapi(match.call(), service=Exchange)
+  v <- .bfapi(match.call(), service=service)
   z <- .xmlp("errorCode", v)
   if(z != "OK") return(z)
   x <- .xmlp("bet",v)
