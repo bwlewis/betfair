@@ -95,15 +95,20 @@ ExchangeAU <- "https://api-au.betfair.com/exchange/v5/BFExchangeService"
   list(element=a,body=b)
 }
 
-`.list2xml` <- function(parameters)
+`.list2xml` <- function(parameters, allowNull=FALSE)
 {
-  if(!is.list(parameters) || length(parameters)<1) return("")
+  if(!is.list(parameters) || (length(parameters)<1 && !allowNull)) return("")
   paste(lapply(1:length(parameters),
     function(j)
     {
       y <- eval(parameters[[j]])
       if(is.list(y)){
-       if(length(y)<1) return("")
+       if(length(y)<1){
+         if(allowNull) return(
+           paste("<",names(parameters)[[j]],">", 
+              "</", names(parameters)[[j]], ">", sep=""))
+         else return("")
+       }
         paste("<",names(parameters)[[j]],">", .list2xml(y),
               "</", names(parameters)[[j]], ">", sep="")
       }
@@ -131,7 +136,7 @@ ExchangeAU <- "https://api-au.betfair.com/exchange/v5/BFExchangeService"
 
 # Generic api interface -- the workhorse function of the package.
 # This function attemps to map standard R function calls to the Betfair API.
-`.bfapi` <- function(fncall, service=Global, debug=FALSE)
+`.bfapi` <- function(fncall, service=Global, debug=FALSE, allowNull=FALSE)
 {
   a <- as.list(fncall)     # Get call and the argument list
   req <- a[[1]]            # The call name
@@ -161,7 +166,7 @@ ExchangeAU <- "https://api-au.betfair.com/exchange/v5/BFExchangeService"
   body <- paste(body, '</header>')
 # Add the parameters (if any)
   if(!is.null(parameters) && length(parameters)>0) 
-    body <- paste(body, .list2xml(parameters), sep="")
+    body <- paste(body, .list2xml(parameters, allowNull), sep="")
 # Complete the document
   body <- paste(body, '</request> </',req,
                       '> </soap:Body> </soap:Envelope>', sep="")

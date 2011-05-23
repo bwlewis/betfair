@@ -461,12 +461,11 @@ print(course)
   .xmlarray2dataframe(x)
 }
 
-# XXX Not working yet...
 `getBetHistory` <- function(
-  betTypesIncluded="MU",
+  betTypesIncluded="S",
   detailed=TRUE,
-  eventTypeIds=list(),
-  marketId=NULL,
+  eventTypeIds=list(int=7),
+  marketId=0,
   locale=NULL, timezone=NULL,
   marketTypesIncluded=list(MarketTypeEnum="O"),
   placedDateFrom="2011-01-01T01:00:00Z",
@@ -476,12 +475,14 @@ print(course)
   startRecord=1,
   service=Exchange)
 {
-  v <- .bfapi(match.call(), service=service, debug=TRUE)
-return(v)
+  v <- .bfapi(match.call(), service=service, allowNull=TRUE)
   z <- .xmlp("errorCode", v)
   if(z != "OK") return(z)
   x <- .xmlp("betHistoryItems",v)
-  .xml2list(x)
+  x <- .xml2list(x)
+  names(x) <- c()
+  x <- lapply(x,.xml2list)
+  foreach(w=x) %do% {w$matches = .xmlarray2dataframe(w$matches);w}
 }
 
 `getMarketProfitAndLoss` <- function(

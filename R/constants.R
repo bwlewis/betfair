@@ -1,3 +1,5 @@
+betStatus <- list("Cancelled", "Lapsed", "Matched", "Settled", "Unmatched")
+
 courseAbbrev <- list(
 Aintree = "Aint",
 Ascot = "Ascot",
