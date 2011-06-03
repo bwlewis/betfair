@@ -1,7 +1,7 @@
 Package: betfair
 Type: Package
 Title: Betfair API R Implementation
-Version: 1.0.0
+Version: 1.0.1
 Date: 2011-01-01
 Author: B. W. Lewis and Colin Magee
 Maintainer: B. W. Lewis <blewis@illposed.net>
