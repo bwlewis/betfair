@@ -399,6 +399,11 @@ print(course)
   market <- lapply(as.list(tags), .xmlp, x)
   tags <-  sub(".*:","",tags)
   names(market) <- tags
+  mrp <- .xml2list(market$runnerPrices)
+  names(mrp) <- c()
+  mrp <- lapply(mrp, .xml2list)
+  mrp <- lapply(mrp, function(x) {x$bestPricesToBack=.xmlarray2dataframe(x$bestPricesToBack);x$bestPricesToLay=.xmlarray2dataframe(x$bestPricesToLay);x})
+  market$runnerPrices <- mrp
   market
 }
 

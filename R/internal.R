@@ -62,7 +62,7 @@ ExchangeAU <- "https://api-au.betfair.com/exchange/v5/BFExchangeService"
   j <- 1
   while(j<=length(p)) {
     q <- gregexpr(">",substring(x,p[j]))[[1]]
-    if(length(q)<1) break
+    if(length(q)<1 || q<0) break
     tag <- gsub("<(.*)>.*","\\1",substr(x,p[j],p[j]+q[1]-1))
     tag <- gsub(" xsi.*","",tag)
     term <- paste("</",tag,">",sep="")
