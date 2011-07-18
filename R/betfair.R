@@ -19,13 +19,12 @@
   x
 }
 
-`getLastTimestamp` <- function(asPOSIXct=FALSE)
+`getLastTimestamp` <- function(POSIX=FALSE)
 {
-  if(exists('timestamp',envir=.bfenv)) return(
-    ifelse(asPOSIXct, 
-      as.POSIXct(
-        strptime(get('timestamp',envir=.bfenv),format="%Y-%m-%dT%H:%M:%OS")),
-      get('timestamp',envir=.bfenv))
+  if(exists('timestamp',envir=.bfenv))
+    if(POSIX) return(as.POSIXct(
+        strptime(get('timestamp',envir=.bfenv),format="%Y-%m-%dT%H:%M:%OS")))
+    else return(get('timestamp',envir=.bfenv))
   invisible()
 }
 

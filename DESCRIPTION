@@ -6,6 +6,6 @@ Date: 2011-01-01
 Author: B. W. Lewis and Colin Magee
 Maintainer: B. W. Lewis <blewis@illposed.net>
 Description: Betfair API
-Depends: R (>= 2.5), RCurl
+Depends: R (>= 2.5), RCurl, foreach, xts
 License: GPL-2
 LazyLoad: yes
