@@ -19,6 +19,16 @@
   x
 }
 
+`getLastTimestamp` <- function(asPOSIXct=FALSE)
+{
+  if(exists('timestamp',envir=.bfenv)) return(
+    ifelse(asPOSIXct, 
+      as.POSIXct(
+        strptime(get('timestamp',envir=.bfenv),format="%Y-%m-%dT%H:%M:%OS")),
+      get('timestamp',envir=.bfenv))
+  invisible()
+}
+
 `getAccountFunds` <- function(service=Exchange)
 {
   x <- .bfapi(match.call(), service=service)

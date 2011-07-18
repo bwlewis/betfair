@@ -185,5 +185,9 @@ ExchangeAU <- "https://api-au.betfair.com/exchange/v5/BFExchangeService"
   x <- .xmlp("sessionToken", ret)
   if(!is.null(x) && nchar(x)>3 && x != st)
     assign("sessionToken", x, envir=.bfenv)
+# Update timestamp
+  x <- .xmlp("timestamp", ret)
+  if(!is.null(x))
+    assign("timestamp", x, envir=.bfenv)
   return(ret)
 }
