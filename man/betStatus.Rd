@@ -1,11 +1,10 @@
 \name{betStatus}
 \alias{betStatus}
 \docType{data}
-\title{
-%%   ~~ data name/kind ... ~~
+\title{betStatus
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+Betfair betStatus
 }
 \usage{data(betStatus)}
 \format{
@@ -18,13 +17,10 @@ List of 5
  $ : chr "Unmatched"
 }
 \details{
-%%  ~~ If necessary, more details than the __description__ above ~~
 }
 \source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
 }
 \references{
-%%  ~~ possibly secondary sources and usages ~~
 }
 \examples{
 data(betStatus)

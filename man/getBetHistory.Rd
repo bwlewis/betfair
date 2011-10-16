@@ -1,81 +1,55 @@
 \name{getBetHistory}
 \alias{getBetHistory}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-%%  ~~function to do ... ~~
+\title{getBetHistory
+getBetHistory
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
 }
 \usage{
-getBetHistory(betTypesIncluded = "S", detailed = TRUE, eventTypeIds = list(int = 7), marketId = 0, locale = NULL, timezone = NULL, marketTypesIncluded = list(MarketTypeEnum = "O"), placedDateFrom = "2011-01-01T01:00:00Z", placedDateTo = format(Sys.Date(), "%Y-%m-%dT%H:%M:%SZ"), recordCount = 100, sortBetsBy = "BET_ID", startRecord = 1, service = Exchange)
+getBetHistory(betTypesIncluded = 'S', detailed = TRUE, eventTypeIds = list(int = 7), marketId = 0, locale = NULL, timezone = NULL, marketTypesIncluded = list(MarketTypeEnum = 'O'), placedDateFrom = '2011-01-01T01:00:00Z', placedDateTo = date, recordCount = 100, sortBetsBy = 'BET_ID', startRecord = 1, service = Exchange)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{betTypesIncluded}{
-%%     ~~Describe \code{betTypesIncluded} here~~
+  \item{betTypesIncluded}{betTypesIncluded
 }
-  \item{detailed}{
-%%     ~~Describe \code{detailed} here~~
+  \item{detailed}{detailed
 }
-  \item{eventTypeIds}{
-%%     ~~Describe \code{eventTypeIds} here~~
+  \item{eventTypeIds}{eventTypeIds
 }
-  \item{marketId}{
-%%     ~~Describe \code{marketId} here~~
+  \item{marketId}{marketId
 }
-  \item{locale}{
-%%     ~~Describe \code{locale} here~~
+  \item{locale}{locale
 }
-  \item{timezone}{
-%%     ~~Describe \code{timezone} here~~
+  \item{timezone}{timezone
 }
-  \item{marketTypesIncluded}{
-%%     ~~Describe \code{marketTypesIncluded} here~~
+  \item{marketTypesIncluded}{marketTypesIncluded
 }
-  \item{placedDateFrom}{
-%%     ~~Describe \code{placedDateFrom} here~~
+  \item{placedDateFrom}{placedDateFrom
 }
-  \item{placedDateTo}{
-%%     ~~Describe \code{placedDateTo} here~~
+  \item{placedDateTo}{placedDateTo
 }
-  \item{recordCount}{
-%%     ~~Describe \code{recordCount} here~~
+  \item{recordCount}{recordCount
 }
-  \item{sortBetsBy}{
-%%     ~~Describe \code{sortBetsBy} here~~
+  \item{sortBetsBy}{sortBetsBy
 }
-  \item{startRecord}{
-%%     ~~Describe \code{startRecord} here~~
+  \item{startRecord}{startRecord
 }
-  \item{service}{
-%%     ~~Describe \code{service} here~~
+  \item{service}{service
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
 }
 \references{
-%% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+colin@betwise.co.uk
 }
 \note{
-%%  ~~further notes~~
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
 ##---- Should be DIRECTLY executable !! ----
@@ -108,7 +82,5 @@ function(
   foreach(w=x) \%do\% {w$matches = .xmlarray2dataframe(w$matches);w}
   }
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
 \keyword{ ~kwd1 }
 \keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

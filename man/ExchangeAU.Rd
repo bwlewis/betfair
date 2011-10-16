@@ -1,11 +1,10 @@
 \name{ExchangeAU}
 \alias{ExchangeAU}
 \docType{data}
-\title{
-%%   ~~ data name/kind ... ~~
+\title{ExchangeAU
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of the dataset. ~~
+Betfair ExchangeAU
 }
 \usage{data(ExchangeAU)}
 \format{
@@ -13,13 +12,10 @@
  chr "https://api-au.betfair.com/exchange/v5/BFExchangeService"
 }
 \details{
-%%  ~~ If necessary, more details than the __description__ above ~~
 }
 \source{
-%%  ~~ reference to a publication or URL from which the data were obtained ~~
 }
 \references{
-%%  ~~ possibly secondary sources and usages ~~
 }
 \examples{
 data(ExchangeAU)

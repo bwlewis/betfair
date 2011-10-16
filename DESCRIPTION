@@ -1,10 +1,10 @@
 Package: betfair
 Type: Package
 Title: Betfair API R Implementation
-Version: 1.0.1
+Version: 1.0.0
 Date: 2011-01-01
 Author: B. W. Lewis and Colin Magee
-Maintainer: B. W. Lewis <blewis@illposed.net>
+Maintainer: Colin Magee <colin@betwise.co.uk>
 Description: Betfair API
 Depends: R (>= 2.5), RCurl, foreach, xts
 License: GPL-2

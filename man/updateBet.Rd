@@ -1,54 +1,37 @@
 \name{updateBet}
 \alias{updateBet}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-%%  ~~function to do ... ~~
+\title{updateBet
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Betfair updateBet
 }
 \usage{
 updateBet(bet, newBetPersistenceType = NULL, newPrice = NULL, newSize = NULL)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{bet}{
-%%     ~~Describe \code{bet} here~~
+  \item{bet}{bet
 }
-  \item{newBetPersistenceType}{
-%%     ~~Describe \code{newBetPersistenceType} here~~
+  \item{newBetPersistenceType}{newBetPersistenceType
 }
-  \item{newPrice}{
-%%     ~~Describe \code{newPrice} here~~
+  \item{newPrice}{newPrice
 }
-  \item{newSize}{
-%%     ~~Describe \code{newSize} here~~
+  \item{newSize}{newSize
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
 }
 \references{
-%% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+colin@betwise.co.uk
 }
 \note{
-%%  ~~further notes~~
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
 ##---- Should be DIRECTLY executable !! ----
@@ -69,7 +52,5 @@ function(bet, newBetPersistenceType=NULL, newPrice=NULL, newSize=NULL)
        oldSize=bet$requestedSize)
   }
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
 \keyword{ ~kwd1 }
 \keyword{ ~kwd2 }% __ONLY ONE__ keyword per line

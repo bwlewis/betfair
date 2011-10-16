@@ -1,72 +1,49 @@
 \name{getMUBets}
 \alias{getMUBets}
-%- Also NEED an '\alias' for EACH other topic documented here.
-\title{
-%%  ~~function to do ... ~~
+\title{getMUBets
 }
 \description{
-%%  ~~ A concise (1-5 lines) description of what the function does. ~~
+Betfair getMUBets
 }
 \usage{
 getMUBets(betIds = NULL, betStatus = "MU", excludeLastSecond = NULL, marketId = NULL, matchedSince = NULL, orderBy = "BET_ID", recordCount = 200, sortOrder = "ASC", startRecord = 0, service = Exchange)
 }
-%- maybe also 'usage' for other objects documented here.
 \arguments{
-  \item{betIds}{
-%%     ~~Describe \code{betIds} here~~
+  \item{betIds}{betIds
 }
-  \item{betStatus}{
-%%     ~~Describe \code{betStatus} here~~
+  \item{betStatus}{betStatus
 }
-  \item{excludeLastSecond}{
-%%     ~~Describe \code{excludeLastSecond} here~~
+  \item{excludeLastSecond}{excludeLastSecond
 }
-  \item{marketId}{
-%%     ~~Describe \code{marketId} here~~
+  \item{marketId}{marketId
 }
-  \item{matchedSince}{
-%%     ~~Describe \code{matchedSince} here~~
+  \item{matchedSince}{matchedSince
 }
-  \item{orderBy}{
-%%     ~~Describe \code{orderBy} here~~
+  \item{orderBy}{orderBy
 }
-  \item{recordCount}{
-%%     ~~Describe \code{recordCount} here~~
+  \item{recordCount}{recordCount
 }
-  \item{sortOrder}{
-%%     ~~Describe \code{sortOrder} here~~
+  \item{sortOrder}{sortOrder
 }
-  \item{startRecord}{
-%%     ~~Describe \code{startRecord} here~~
+  \item{startRecord}{startRecord
 }
-  \item{service}{
-%%     ~~Describe \code{service} here~~
+  \item{service}{service
 }
 }
 \details{
-%%  ~~ If necessary, more details than the description above ~~
 }
 \value{
-%%  ~Describe the value returned
-%%  If it is a LIST, use
-%%  \item{comp1 }{Description of 'comp1'}
-%%  \item{comp2 }{Description of 'comp2'}
-%% ...
 }
 \references{
-%% ~put references to the literature/web site here ~
 }
 \author{
-%%  ~~who you are~~
+colin@betwise.co.uk
 }
 \note{
-%%  ~~further notes~~
 }
 
-%% ~Make other sections like Warning with \section{Warning }{....} ~
 
 \seealso{
-%% ~~objects to See Also as \code{\link{help}}, ~~~
 }
 \examples{
 ##---- Should be DIRECTLY executable !! ----
@@ -99,7 +76,5 @@ function(betIds=NULL,
   x
   }
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
 \keyword{ ~kwd1 }
 \keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
