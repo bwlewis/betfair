@@ -157,6 +157,7 @@ print(course)
 {
   v <- .bfapi(match.call(), service=service)
   z <- .xmlp("errorCode", v)
+  if(is.null(z)) return(v)
   if(z != "OK") return(z)
   x <- .xmlp("completeMarketPrices", v)
 # NOTE:
@@ -219,6 +220,7 @@ print(course)
 {
   v <- .bfapi(match.call(), service=service)
   z <- .xmlp("errorCode", v)
+  if(is.null(z)) return(v)
   if(z != "OK") return(z)
   x <- .xmlp("marketLite", v)
   x <- as.list(.xmlarray2dataframe(x))
@@ -235,6 +237,7 @@ print(course)
 {
   v <- .bfapi(match.call(), service=service)
   z <- .xmlp("errorCode", v)
+  if(is.null(z)) return(v)
   if(z != "OK") return(z)
   x <- .xmlp("tradedVolume", v)
   s <- unlist(strsplit(x, ":", fixed=TRUE))
@@ -308,6 +311,49 @@ print(course)
   }
   v <- .bfapi(call("placeBets", bets=bets), service=service)
   z <- .xmlp("errorCode", v)
+  if(is.null(z)) return(v)
+  if(z != "OK") return(z)
+  x <- .xmlp("betResults", v)
+  a1 <- unlist(strsplit(x,"><"))
+  a2 <- a1[grep(".*>.*<.*",a1)]
+  l  <- unique(sub("[ >].*","",a2))  # labels
+  l <- sub("<","",l)
+  v  <- sub(".*>(.*)<.*","\\1",a2)   # values
+  m  <- matrix(v, ncol=length(l), byrow=T)
+  colnames(m) <- l
+  x <- as.data.frame(m, stringsAsFactors=FALSE)
+# XXX column type conversion
+  x
+}
+
+# Bet can be either a numeric betId or a bet returned by getBet
+`updateBet` <- function(bet, newBetPersistenceType=NULL, newPrice=NULL, newSize=NULL)
+{
+  if(is.numeric(bet) || is.character(bet)) bet <- getBet(betId=eval(bet))
+  if(is.null(newBetPersistenceType)) newBetPersistenceType <- bet$persistenceType
+  if(is.null(newPrice)) newPrice <- bet$price
+  if(is.null(newSize)) newSize <- bet$remainingSize
+  list(betId=bet$betId, newBetPersistenceType=newBetPersistenceType,
+       newPrice=newPrice, newSize=newSize,
+       oldBetPersistenceType=bet$betPersistenceType,
+       oldPrice=bet$price,
+       oldSize=bet$requestedSize)
+}
+
+`updateBets` <- function(bets=list(), service=Exchange)
+{
+# Single bet convenience call:
+  if(!is.list(bets[[1]])) {
+    bets = list(UpdateBets=bets)
+  }
+# Argument not named as required
+  if(length(names(bets)) < length(bets)) {
+    names(bets) <- rep("UpdateBets",length(bets))
+  }
+  v <- .bfapi(call("updateBets", bets=bets), service=service, debug=TRUE)
+return(v)
+  z <- .xmlp("errorCode", v)
+  if(is.null(z)) return(v)
   if(z != "OK") return(z)
   x <- .xmlp("betResults", v)
   a1 <- unlist(strsplit(x,"><"))
@@ -326,6 +372,7 @@ print(course)
 {
   v <- .bfapi(match.call(), service=service)
   z <- .xmlp("errorCode", v)
+  if(is.null(z)) return(v)
   if(z != "OK") return(z)
   x <- .xmlp("betLite", v)
   tags <- .xmltags(x)
@@ -351,6 +398,7 @@ print(course)
   }
   v <- .bfapi(call("cancelBets", bets=bets), service=service)
   z <- .xmlp("errorCode", v)
+  if(is.null(z)) return(v)
   if(z != "OK") return(z)
   x <- .xmlp("betResults", v)
   a1 <- unlist(strsplit(x,"><"))
@@ -369,6 +417,7 @@ print(course)
 {
   v <- .bfapi(match.call(), service=service)
   z <- .xmlp("errorCode", v)
+  if(is.null(z)) return(v)
   if(z != "OK") return(z)
   x <- .xmlp("market",v)
   tags <- .xmltags(x, exclude=c(".*Runner", ".*EventId", "asianLineId","handicap","name","selectionId"))
@@ -385,6 +434,7 @@ print(course)
 {
   v <- .bfapi(match.call(), service=Global)
   z <- .xmlp("errorCode", v)
+  if(is.null(z)) return(v)
   if(z != "OK") return(z)
   invisible()
 }
@@ -393,6 +443,7 @@ print(course)
 {
   v <- .bfapi(match.call(), service=Global)
   z <- .xmlp("errorCode", v)
+  if(is.null(z)) return(v)
   if(z != "OK") return(z)
   z <- .xmlp("convertedAmount", v)
   return(as.numeric(z))
@@ -402,6 +453,7 @@ print(course)
 {
   v <- .bfapi(match.call(), service=service)
   z <- .xmlp("errorCode", v)
+  if(is.null(z)) return(v)
   if(z != "OK") return(z)
   x <- .xmlp("marketPrices",v)
   tags <- c("bspMarket","currencyCode","delay","discountAllowed","lastRefresh","marketBaseRate","marketId","marketInfo","marketStatus","numberOfWinners","removedRunners","runnerPrices")
@@ -420,6 +472,7 @@ print(course)
 {
   v <- .bfapi(match.call(), service=service)
   z <- .xmlp("errorCode", v)
+  if(is.null(z)) return(v)
   if(z != "OK") return(z)
   x <- .xmlp("marketDisplayDetails",v)
   x
@@ -437,6 +490,7 @@ print(course)
 {
   v <- .bfapi(match.call(), service=service)
   z <- .xmlp("errorCode", v)
+  if(is.null(z)) return(v)
   if(z != "OK") return(z)
   x <- .xmlp("bets",v)
   x <- .xmlarray2dataframe(x)
@@ -453,6 +507,7 @@ print(course)
 {
   v <- .bfapi(match.call(), service=service)
   z <- .xmlp("errorCode", v)
+  if(is.null(z)) return(v)
   if(z != "OK") return(z)
   x <- .xmlp("bet",v)
   x <- .xmlx("matches",x)
@@ -470,6 +525,7 @@ print(course)
 {
   v <- .bfapi(match.call(), service=service)
   z <- .xmlp("errorCode", v)
+  if(is.null(z)) return(v)
   if(z != "OK") return(z)
   x <- .xmlp("priceItems",v)
   .xmlarray2dataframe(x)
@@ -491,6 +547,7 @@ print(course)
 {
   v <- .bfapi(match.call(), service=service, allowNull=TRUE)
   z <- .xmlp("errorCode", v)
+  if(is.null(z)) return(v)
   if(z != "OK") return(z)
   x <- .xmlp("betHistoryItems",v)
   x <- .xml2list(x)
@@ -508,6 +565,7 @@ print(course)
 {
   v <- .bfapi(match.call(), service=service)
   z <- .xmlp("errorCode", v)
+  if(is.null(z)) return(v)
   if(z != "OK") return(z)
   x <- .xml2list(v)
 x
