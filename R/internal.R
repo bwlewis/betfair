@@ -9,6 +9,28 @@ Global   <- "Global"
 Exchange   <- "https://api.betfair.com/exchange/v5/BFExchangeService"
 ExchangeAU <- "https://api-au.betfair.com/exchange/v5/BFExchangeService"
 
+.onLoad <- function(lib, pkg) {
+  if (interactive()) {
+    packageStartupMessage('betfaiR Questions?  Ask at http://answers.betwise.net/\n',
+        domain=NA, appendLF=TRUE)
+  }
+# Runtime package dependency resolution since this package shall be distributed outside
+# CRAN.
+  p = c("bitops","zoo","xts","iterators","foreach")
+  for(x in p)
+    if(any(is.na(utils:::packageDescription(x)))) 
+      install.packages(x,repos="http://cran.at.r-project.org/")
+  for(x in p) do.call("require",list(package=x))
+  if(any(is.na(utils:::packageDescription("RCurl")))) {
+    if(Sys.info()["sysname"] == "Windows") {
+      install.packages("RCurl",repos="http://www.stats.ox.ac.uk/pub/RWin/")
+    } else {
+      install.packages("RCurl")
+    }
+  }
+  require("RCurl")
+}
+
 # Get a list of unique tags in the body, exluding patterns from the list:
 .xmltags <- function(body, exclude=c())
 {

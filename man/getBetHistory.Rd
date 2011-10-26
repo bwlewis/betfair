@@ -6,7 +6,7 @@ getBetHistory
 \description{
 }
 \usage{
-getBetHistory(betTypesIncluded = 'S', detailed = TRUE, eventTypeIds = list(int = 7), marketId = 0, locale = NULL, timezone = NULL, marketTypesIncluded = list(MarketTypeEnum = 'O'), placedDateFrom = '2011-01-01T01:00:00Z', placedDateTo = date, recordCount = 100, sortBetsBy = 'BET_ID', startRecord = 1, service = Exchange)
+getBetHistory(betTypesIncluded = 'S', detailed = TRUE, eventTypeIds = list(int = 7), marketId = 0, locale = NULL, timezone = NULL, marketTypesIncluded = list(MarketTypeEnum = 'O'), placedDateFrom = '2011-01-01T01:00:00Z', placedDateTo =  format(Sys.Date(), "\%Y-\%m-\%dT\%H:\%M:\%SZ"), recordCount = 100, sortBetsBy = 'BET_ID', startRecord = 1, service = Exchange)
 }
 \arguments{
   \item{betTypesIncluded}{betTypesIncluded
